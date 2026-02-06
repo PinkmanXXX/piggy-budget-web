@@ -16,18 +16,17 @@
             --tg-theme-button-text-color: #fff;
 
             /* Настройки стекла (Светлая тема) */
-            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.65);
             --glass-border: rgba(255, 255, 255, 0.4);
             --glass-shadow: rgba(0, 0, 0, 0.05);
             --input-bg: rgba(255, 255, 255, 0.5);
         }
 
-        /* Настройки стекла (Темная тема) - определяется автоматически */
         @media (prefers-color-scheme: dark) {
             :root {
                 --glass-bg: rgba(30, 30, 30, 0.6);
-                --glass-border: rgba(255, 255, 255, 0.1);
-                --glass-shadow: rgba(0, 0, 0, 0.2);
+                --glass-border: rgba(255, 255, 255, 0.08);
+                --glass-shadow: rgba(0, 0, 0, 0.3);
                 --input-bg: rgba(0, 0, 0, 0.3);
             }
         }
@@ -40,18 +39,30 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
-            /* Цвет фона берем от Телеграма */
             background-color: var(--tg-theme-bg-color);
             color: var(--tg-theme-text-color);
             position: relative;
             overflow-x: hidden;
-            /* Запрет зума и выделения */
             user-select: none;
             -webkit-user-select: none;
             touch-action: manipulation;
+            /* Плавное появление всего интерфейса */
+            animation: fadeIn 0.5s ease-out;
         }
 
-        /* ЖИВОЙ ФОН (Орбы) */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ЖИВОЙ ФОН */
         .background-orbs {
             position: fixed;
             top: 0;
@@ -65,28 +76,25 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.6;
+            filter: blur(70px);
+            opacity: 0.5;
             animation: moveOrb 15s ease-in-out infinite alternate;
         }
 
-        /* Орб 1: Цвет кнопки (обычно синий) */
         .orb-1 {
-            width: 250px;
-            height: 250px;
+            width: 280px;
+            height: 280px;
             background: var(--tg-theme-button-color);
-            top: -50px;
-            left: -50px;
+            top: -80px;
+            left: -80px;
         }
 
-        /* Орб 2: Дополнительный акцент (фиолетовый/красный) */
         .orb-2 {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             background: #8e2de2;
-            /* Фиолетовый градиент */
-            bottom: -50px;
-            right: -50px;
+            bottom: -60px;
+            right: -60px;
             animation-delay: -5s;
             animation-duration: 20s;
         }
@@ -101,23 +109,22 @@
             }
         }
 
-        /* ЗАГОЛОВОК */
         h3 {
-            margin: 10px 0 10px 0;
+            margin: 10px 0;
             font-weight: 800;
             font-size: 24px;
             text-align: center;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* ОБЩИЙ КЛАСС СТЕКЛА */
+        /* СТЕКЛО */
         .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 24px -1px var(--glass-shadow);
-            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 var(--glass-shadow);
+            border-radius: 22px;
         }
 
         /* ПЕРЕКЛЮЧАТЕЛЬ */
@@ -126,32 +133,33 @@
             padding: 5px;
             gap: 5px;
             background: var(--input-bg);
-            border-radius: 18px;
+            border-radius: 20px;
         }
 
         .type-btn {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             text-align: center;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--tg-theme-hint-color);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .type-btn.active {
             color: var(--tg-theme-text-color);
             background: var(--tg-theme-bg-color);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: scale(1.02);
         }
 
-        /* ПОЛЯ ВВОДА */
+        /* ПОЛЯ */
         input,
         select {
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             box-sizing: border-box;
             font-size: 17px;
             color: var(--tg-theme-text-color);
@@ -160,15 +168,7 @@
             border: none;
             font-weight: 500;
             background: var(--input-bg);
-            /* Полупрозрачный фон */
             transition: all 0.3s;
-            margin-bottom: 0;
-            /* Отступы задает flex gap body */
-        }
-
-        input::placeholder {
-            color: var(--tg-theme-hint-color);
-            opacity: 0.7;
         }
 
         input:focus,
@@ -178,45 +178,62 @@
             box-shadow: 0 0 0 2px var(--tg-theme-button-color) inset;
         }
 
-        /* КНОПКА */
+        /* === КНОПКА (С ПЛАВНОЙ АНИМАЦИЕЙ) === */
         .main-btn {
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             border: none;
-            border-radius: 20px;
+            border-radius: 22px;
             font-size: 18px;
             font-weight: 700;
             color: #fff;
             cursor: pointer;
-            margin-top: 10px;
-            /* Градиент на основе цвета темы */
-            background: linear-gradient(135deg, var(--tg-theme-button-color), #8e2de2);
-            box-shadow: 0 10px 25px -5px var(--tg-theme-button-color), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            margin-top: 15px;
             position: relative;
             overflow: hidden;
-            transition: transform 0.1s;
+
+            /* Жидкий градиент */
+            background: linear-gradient(90deg, var(--tg-theme-button-color), #8e2de2, var(--tg-theme-button-color));
+            background-size: 200% auto;
+            animation: liquidFlow 4s linear infinite;
+            /* Постоянное движение цвета */
+
+            box-shadow: 0 10px 25px -5px var(--tg-theme-button-color);
+
+            /* Мягкая физика нажатия */
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
         }
 
+        /* Анимация перелива цвета */
+        @keyframes liquidFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Состояние нажатия */
         .main-btn:active {
-            transform: scale(0.97);
-            opacity: 0.95;
+            transform: scale(0.92);
+            /* Глубокое мягкое нажатие */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* Тень уменьшается */
         }
 
-        /* Блик на кнопке */
+        /* Блик при касании */
         .main-btn::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: rotate(45deg) translate(-100%, -100%);
-            transition: 0.5s;
-        }
-
-        .main-btn:hover::after {
-            transform: rotate(45deg) translate(100%, 100%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0.5;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -244,11 +261,7 @@
     <button class="main-btn" onclick="sendData()">ДОБАВИТЬ</button>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
-
-        // Устанавливаем цвета из темы Telegram в CSS переменные
+        const tg = window.Telegram.WebApp; tg.expand(); tg.ready();
         document.documentElement.style.setProperty('--tg-theme-bg-color', tg.themeParams.bg_color || '#fff');
         document.documentElement.style.setProperty('--tg-theme-text-color', tg.themeParams.text_color || '#000');
         document.documentElement.style.setProperty('--tg-theme-hint-color', tg.themeParams.hint_color || '#999');
@@ -256,12 +269,10 @@
 
         const catsExpense = ["Продукты 🛒", "Семейство 🏠", "Животные 🐾", "Красота ✨", "Здоровье 💊", "Одежда 👗", "Авто 🚗", "Транспорт 🚕", "Развлечения 🍿", "Цифровые услуги 📱", "Квартира 🏢", "Рестораны 🍔", "Другое 🌀"];
         const catsIncome = ["Зарплата 💰", "Кешбэк 💸", "Сюрприз 🎁", "Другое 🌀"];
-
         let currentType = 'expense';
 
         function renderCats() {
-            const list = currentType === 'expense' ? catsExpense : catsIncome;
-            document.getElementById('category').innerHTML = list.map(c => `<option value="${c}">${c}</option>`).join('');
+            document.getElementById('category').innerHTML = (currentType === 'expense' ? catsExpense : catsIncome).map(c => `<option value="${c}">${c}</option>`).join('');
         }
 
         function setType(type) {
@@ -277,26 +288,16 @@
                 const category = document.getElementById('category').value;
                 const desc = document.getElementById('desc').value;
 
-                if (!amount) {
-                    tg.showAlert("Введите сумму!");
-                    return;
-                }
+                if (!amount) { tg.showAlert("Введите сумму!"); return; }
 
                 const data = {
                     type: currentType === 'expense' ? 'op_waiting_expense' : 'op_waiting_income',
                     amount: parseFloat(amount.replace(',', '.')),
-                    category: category,
-                    description: desc || "-"
+                    category: category, description: desc || "-"
                 };
-
                 tg.sendData(JSON.stringify(data));
-
-            } catch (e) {
-                alert("Ошибка JS: " + e.message);
-            }
+            } catch (e) { alert("Ошибка: " + e.message); }
         }
-
-        // Старт
         renderCats();
     </script>
 </body>
