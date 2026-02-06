@@ -18,35 +18,27 @@
             gap: 15px;
         }
 
-        h2 {
-            margin-top: 0;
-            text-align: center;
-        }
-
-        label {
-            font-size: 14px;
-            color: var(--tg-theme-hint-color, #888);
-            margin-bottom: 5px;
-            display: block;
-        }
-
         select,
-        input {
+        input,
+        button {
             width: 100%;
             padding: 12px;
             box-sizing: border-box;
             border: 1px solid var(--tg-theme-hint-color, #ccc);
             border-radius: 12px;
-            background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            color: var(--tg-theme-text-color, #000);
             font-size: 16px;
-            outline: none;
             margin-bottom: 10px;
-            -webkit-appearance: none;
-            appearance: none;
         }
 
-        /* Стили для кнопок типа операций */
+        button {
+            background-color: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 15px;
+        }
+
         .type-selector {
             display: flex;
             gap: 10px;
@@ -57,87 +49,60 @@
             flex: 1;
             padding: 10px;
             border-radius: 10px;
-            border: 2px solid transparent;
             background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            color: var(--tg-theme-text-color, #000);
             text-align: center;
             cursor: pointer;
-            transition: 0.2s;
-            font-weight: 500;
         }
 
         .type-btn.active {
-            border-color: var(--tg-theme-button-color, #3390ec);
-            color: var(--tg-theme-button-color, #3390ec);
-            background: var(--tg-theme-bg-color, #fff);
-        }
-
-        #mainBtn {
-            background-color: var(--tg-theme-button-color, #3390ec);
-            color: var(--tg-theme-button-text-color, #fff);
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
+            background: var(--tg-theme-button-color, #3390ec);
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
-
     <div class="type-selector">
         <div class="type-btn active" onclick="setType('expense')" id="btn-expense">Расход</div>
         <div class="type-btn" onclick="setType('income')" id="btn-income">Доход</div>
     </div>
 
-    <div>
-        <label>Сумма (₽)</label>
-        <input type="number" id="amount" placeholder="0" inputmode="decimal">
-    </div>
+    <label>Сумма</label>
+    <input type="number" id="amount" placeholder="0" inputmode="decimal">
 
-    <div id="cat-wrapper">
-        <label>Категория</label>
-        <select id="category">
-            <option value="Продукты и товары для дома 🛒">Продукты и товары 🛒</option>
-            <option value="Семейство 🏠">Семейство 🏠</option>
-            <option value="Животные 🐾">Животные 🐾</option>
-            <option value="Красота ✨">Красота ✨</option>
-            <option value="Здоровье 💊">Здоровье 💊</option>
-            <option value="Одежда 👗">Одежда 👗</option>
-            <option value="Авто 🚗">Авто 🚗</option>
-            <option value="Транспорт 🚕">Транспорт 🚕</option>
-            <option value="Развлечения 🍿">Развлечения 🍿</option>
-            <option value="Цифровые платежи 📱">Цифровые платежи 📱</option>
-            <option value="Цифровые продукты 💻">Цифровые продукты 💻</option>
-            <option value="Квартира 🏢">Квартира 🏢</option>
-            <option value="Другое 🌀">Другое 🌀</option>
-        </select>
-    </div>
+    <label>Категория</label>
+    <select id="category">
+        <option value="Продукты и товары для дома 🛒">Продукты 🛒</option>
+        <option value="Семейство 🏠">Семейство 🏠</option>
+        <option value="Животные 🐾">Животные 🐾</option>
+        <option value="Красота ✨">Красота ✨</option>
+        <option value="Здоровье 💊">Здоровье 💊</option>
+        <option value="Одежда 👗">Одежда 👗</option>
+        <option value="Авто 🚗">Авто 🚗</option>
+        <option value="Транспорт 🚕">Транспорт 🚕</option>
+        <option value="Развлечения 🍿">Развлечения 🍿</option>
+        <option value="Цифровые платежи 📱">Цифровые платежи 📱</option>
+        <option value="Квартира 🏢">Квартира 🏢</option>
+        <option value="Рестораны 🍔">Рестораны 🍔</option>
+        <option value="Другое 🌀">Другое 🌀</option>
+    </select>
 
-    <div>
-        <label>Описание (необязательно)</label>
-        <input type="text" id="desc" placeholder="Например: Ашан">
-    </div>
+    <label>Описание</label>
+    <input type="text" id="desc" placeholder="Комментарий">
 
-    <button id="mainBtn" onclick="sendData()">Добавить</button>
+    <button type="button" onclick="sendData()">ДОБАВИТЬ</button>
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Раскрыть на весь экран
+        tg.expand();
 
         let currentType = 'expense';
-
         const incomeCats = [
             { val: "Зарплата 💰", text: "Зарплата 💰" },
             { val: "Кешбэк 💸", text: "Кешбэк 💸" },
-            { val: "Сюрприз 🎁", text: "Сюрприз 🎁" },
             { val: "Другое 🌀", text: "Другое 🌀" }
         ];
-
+        // Сохраняем изначальный список категорий расходов
         const expenseCatsHTML = document.getElementById('category').innerHTML;
 
         function setType(type) {
@@ -154,22 +119,27 @@
         }
 
         function sendData() {
-            let amount = document.getElementById('amount').value;
+            let amountVal = document.getElementById('amount').value;
             let category = document.getElementById('category').value;
             let description = document.getElementById('desc').value;
 
-            if (!amount) {
-                tg.showAlert("Введите сумму!");
+            if (!amountVal) {
+                tg.showAlert("❌ Введите сумму!");
                 return;
             }
 
+            // Формируем данные
             let data = {
                 type: currentType === 'expense' ? 'op_waiting_expense' : 'op_waiting_income',
-                amount: parseFloat(amount.replace(',', '.')),
+                amount: parseFloat(amountVal.replace(',', '.')),
                 category: category,
                 description: description || "-"
             };
 
+            // ОТЛАДКА: Если эта строка сработает, значит JS жив
+            // tg.showAlert("Отправляю: " + JSON.stringify(data)); 
+
+            // Отправляем данные боту
             tg.sendData(JSON.stringify(data));
         }
     </script>
